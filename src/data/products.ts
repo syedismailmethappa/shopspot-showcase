@@ -51,7 +51,7 @@ export const products: Product[] = [
     price: "₹1,299",
     image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&q=80",
     store: "myntra",
-    affiliateLink: "https://myntra.com",
+    affiliateLink: "https://myntr.it/4F2uIFi",
     category: "Footwear",
   },
   {
