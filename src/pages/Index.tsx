@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { StoreFilter } from "@/components/StoreFilter";
 import { ProductCard } from "@/components/ProductCard";
+import { MethAIChatbot } from "@/components/MethAIChatbot";
 import { Search, TrendingUp } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import heroBanner from "@/assets/hero-banner.jpg";
@@ -35,11 +36,11 @@ const Index = () => {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
               Discover Best Deals Across Top Stores
             </h1>
-            <p className="text-lg md:text-xl mb-8 opacity-95">
+            <p className="text-lg md:text-xl mb-8 opacity-95 animate-fade-in" style={{ animationDelay: '0.1s' }}>
               Compare prices from Amazon, Myntra, and Meesho - All in one place
             </p>
-            <div className="flex gap-4 justify-center items-center">
-              <TrendingUp className="w-6 h-6" />
+            <div className="flex gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              <TrendingUp className="w-6 h-6 animate-pulse" />
               <span className="text-sm font-medium">Trending Products Updated Daily</span>
             </div>
           </div>
@@ -67,7 +68,7 @@ const Index = () => {
 
       {/* Products Grid */}
       <section className="container mx-auto px-4 py-12">
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in">
           <h2 className="text-3xl font-bold text-foreground mb-2">
             All Products
           </h2>
@@ -77,17 +78,26 @@ const Index = () => {
         </div>
 
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-20">
+          <div className="text-center py-20 animate-fade-in">
             <p className="text-xl text-muted-foreground">No products found. Try adjusting your filters.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard key={product.id} {...product} />
+            {filteredProducts.map((product, index) => (
+              <div 
+                key={product.id}
+                className="animate-fade-in hover-scale"
+                style={{ animationDelay: `${index * 0.05}s` }}
+              >
+                <ProductCard {...product} />
+              </div>
             ))}
           </div>
         )}
       </section>
+
+      {/* MethAI Chatbot */}
+      <MethAIChatbot />
 
       {/* Footer */}
       <footer className="bg-muted mt-20 py-8">
