@@ -1,19 +1,31 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+// Required for fetch API in Deno
+import "https://deno.land/x/xhr@0.3.1/mod.ts";
+import { serve } from "https://deno.land/std@0.208.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
+import { corsHeaders } from './cors.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
-serve(async (req) => {
+interface ChatRequest {
+  message: string;
+  sessionId?: string;
+  imageUrl?: string;
+}
+
+serve(async (req: Request) => {
+  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
   try {
-    const { message, sessionId, imageUrl } = await req.json();
+    const { message, sessionId, imageUrl } = await req.json() as ChatRequest;
+    
+    if (!message) {
+      throw new Error('Message is required');
     
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
     const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
